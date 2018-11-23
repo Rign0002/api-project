@@ -16,10 +16,96 @@ html{
     line-height: 1.5;
     font-family: lato,
 }
+header{
+    text-align:  center;
+    border-bottom: 1px solid black;
+    background-image: url(../img/header.png);
+    background-repeat: repeat-x;
+}
+.page{
+    display: none;
+}
+body{
+    background-color: rgb(245,245,245);
+}
+
+/**********************************************************
+                    IMAGES
+**********************************************************/
 
 img[src="img/attribution-logo.svg"]{
     width: 20%;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 20%;
+}
+.searchButtonDiv,.backButtonDiv,.preferencesDiv{
+    display: inline;
+}
+.searchButtonDiv,.backButtonDiv,.preferencesDiv:hover{
+    cursor: pointer;
+}
+#search-button{
+    width: 18px;
+    transform: translateY(11px) translateX(-40px);
+}
+.iconic-property-stroke,
+.iconic-property-fill {
+    fill: hsl(300deg 20% 20%);
+    stroke: hsl(300deg 0% 70%);
+}
+#preferences-button{
+    width: 20px;
+    height: auto;
+    transform: translate(-20px, 5px)
+}
+#back-button{
+    transform: translateY(3px);
+}
+/**********************************************************
+                    IMAGES END
+**********************************************************/
+
+footer{
+    margin-top: 5%;
+    text-align: center;
+}
+
+#search-input{
+    width: 60%;
+    margin: 3% 1%;
+    padding: 1%;
+    text-align: center;
+    font-weight: bold;
+}
+#search-input::placeholder{
+    text-align: center;
+    color: green;
+    font-weight: normal;
+}
+
+#search-input{
+    border: 1px solid black;
+}
+
+
+
+.show{
+    display: block;
+}
+.hide{
+    display: none;
+}
+
+
+/**********************************************************
+                    MEDIA QUERIES
+**********************************************************/
+
+@media (min-width: 940px){
+    #search-input{
+        margin: 28px 10px;
+        padding: 9px
+    }
 }
