@@ -18,7 +18,7 @@
                 <img data-src="img/magnifying-glass.svg" id="search-button" alt="Search" title="Search" class="iconic iconic-md" />
             </div>
             <div class="preferencesDiv">
-                <img data-src= img/settings-lg.svg id="preferences-button" alt="preferences" title="preferences" class="iconic iconic-md" />
+                <img data-src=img/settings-lg.svg id="preferences-button" alt="preferences" title="preferences" class="iconic iconic-md" />
             </div>
         </header>
 
@@ -29,14 +29,33 @@
 
         <div class="page" id="search-results">
             <section class="title"></section>
-            <section class="content"></section>
+            <section class="content flex-container"></section>
         </div>
 
         <div class="page" id="recommend-results">
             <section class="title"></section>
-            <section class="content"></section>
+            <section class="content flex-container"></section>
+        </div>
+
+
+        <div class="overlay hide">&nbsp;</div>
+        <div class="modal off">
+            <div class="modal-header">
+                <h2>Preferences</h2>
+            </div>
+            <div class="modal-radio">
+                <input type="radio" name="video" value="movie" id="movie" checked>
+                <label>Movie</label>
+
+                <input type="radio" name="video" value="tv" id="tv">
+                <label>TV Series</label>
+            </div>
+            <button class="cancelButton">Cancel</button>
+            <button class="saveButton">Save</button>
+
         </div>
     </main>
+
 
 
     <div class="attribution">

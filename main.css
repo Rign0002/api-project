@@ -1,0 +1,244 @@
+/***************************************************************************
+Filename: main.css
+Author: Justin Rignault
+Description: main css file linked to index.html for api project
+Date: Nov 12 2018
+***************************************************************************/
+@import url("https://fonts.googleapis.com/css?family=Lato|Merriweather");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: lato, helvetica, sans-serif;
+}
+
+header {
+    text-align: center;
+    border-bottom: 1px solid black;
+    background-image: url(../img/header.png);
+    background-repeat: repeat-x;
+}
+
+.page {
+    display: none;
+}
+
+body {
+    background-color: rgb(245, 245, 245);
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: merriweather, georgia, serif;
+}
+
+/**********************************************************
+                    IMAGES
+**********************************************************/
+
+.attribution {
+    width: 20%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20%;
+}
+
+.searchButtonDiv,
+.backButtonDiv,
+.preferencesDiv {
+    display: inline;
+}
+
+.searchButtonDiv,
+.backButtonDiv,
+.preferencesDiv:hover {
+    cursor: pointer;
+}
+
+#search-button {
+    width: 18px;
+    transform: translateY(11px) translateX(-40px);
+}
+
+.iconic-property-stroke,
+.iconic-property-fill {
+    fill: hsl(300deg 20% 20%);
+    stroke: hsl(300deg 0% 70%);
+}
+
+#preferences-button {
+    width: 20px;
+    height: auto;
+    transform: translate(-20px, 5px)
+}
+
+#back-button {
+    transform: translateY(3px);
+}
+
+/**********************************************************
+                    MODAL WINDOW
+**********************************************************/
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+}
+
+.modal {
+    position: fixed;
+    width: 50%;
+    height: 25%;
+    z-index: 101;
+    top: calc((100% - 25%)/2);
+    left: calc((100% - 50%)/2);
+    border: 1px solid black;
+    text-align: center;
+    background-color: white
+}
+input[type=radio]{
+    transform: scale(1.5);
+}
+.off {
+    transform: translateY(500%);
+}
+
+.on {
+    transform: translateY(0);
+    transition: all 0.7s ease-in;
+}
+
+.cancelButton,
+.saveButton {
+    width: 40%;
+    position: absolute;
+    border: none;
+    background-color: green;
+    color: white;
+    padding: 0.5rem 2rem;
+
+}
+
+.saveButton {
+    bottom: 1rem;
+    right: 1rem;
+    cursor: pointer;
+}
+
+.cancelButton {
+    bottom: 1rem;
+    left: 1rem;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 4%
+}
+
+.modal-radio {
+    margin-top: 10%;
+}
+label{
+    padding: 2%;
+}
+
+label:nth-child(2) {
+    margin-right: 20px
+}
+
+#tv {
+    margin-left: 20px;
+}
+
+/**********************************************************
+                    CARDS
+**********************************************************/
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.movieCard {
+    width: 50rem;
+    height: auto;
+    margin: 1rem auto;
+    background-color: cornflowerblue;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s linear;
+}
+
+.movieCard:hover {
+    transform: scale(1.05);
+}
+
+.imageSection {
+    float: left;
+    width: 12rem;
+    height: 17rem;
+    margin-right: 1rem;
+    overflow: hidden;
+}
+
+.imageSection > img {
+    height: 17rem;
+    margin-right: 1rem;
+}
+
+/**********************************************************
+                    CARDS END
+**********************************************************/
+
+#search-input {
+    width: 60%;
+    margin: 3% 1%;
+    padding: 1%;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid black;
+}
+
+#search-input::placeholder {
+    text-align: center;
+    color: green;
+    font-weight: normal;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+footer {
+    margin-top: 5%;
+    text-align: center;
+}
+
+/**********************************************************
+                    MEDIA QUERIES
+**********************************************************/
+
+@media (min-width: 940px) {
+    #search-input {
+        margin: 28px 10px;
+        padding: 9px
+    }
+}
