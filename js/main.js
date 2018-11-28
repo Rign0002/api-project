@@ -6,7 +6,7 @@ Date: Nov 12 2018
 ***************************************************************************/
 
 /* globals APIKEY */
-
+let immediatelyInvokedFunctionExpression = (function(){
 const movieDataBaseURL = "https://api.themoviedb.org/3/"
 let imageURL = null;
 let imageSizes = [];
@@ -316,3 +316,4 @@ function createRecommendationsPage(data) {
         card.addEventListener("click", getRecommendations);
     })
 }
+})();
