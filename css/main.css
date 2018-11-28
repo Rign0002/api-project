@@ -287,6 +287,12 @@ footer {
         text-align: center;
 
     }
+    .modal {
+    width: 50%;
+    height: 40%;
+    top: calc((100% - 40%)/2);
+    left: calc((100% - 50%)/2);
+    border: 3px solid rgb(100,149,237);
 }
 
 @media (min-width: 940px) {
