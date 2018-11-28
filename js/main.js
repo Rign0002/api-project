@@ -96,7 +96,6 @@ function getSearchResults() {
     fetch(url)
         .then(response => response.json())
         .then(data => {
-        console.log(data);
             createPage(data);
         })
         .catch(error => alert(error));
@@ -194,9 +193,9 @@ function createPage(data) {
     contentTitle.innerHTML = "";
 
     if (data.total_results == 0) {
-        message.textContent = `No results found for ${searchString}`;
+        message.textContent = `No results found for "${searchString}"`;
     } else {
-        message.textContent = `Showing results 1-${data.results.length} of ${data.total_results} for ${searchString}`;
+        message.textContent = `Showing results 1-${data.results.length} of ${data.total_results} for "${searchString}"`;
         message2.textContent = `Click a movie to get recommendations based on that movie`;
 
     }
@@ -239,9 +238,11 @@ function createMovieCards(results) {
             videoOverview.textContent = `Quick summary: ${movie.overview}`;
             movieCard.setAttribute("data-title", movie.name);
         }
-
+        if (movie.poster_path){
         image.src = `${imageURL}${imageSizes[2]}${movie.poster_path}`;
-
+        } else {
+            image.src = "img/imageNotFound.png";
+        }
         movieCard.setAttribute("data-id", movie.id);
 
         movieCard.className = "movieCard";
@@ -298,9 +299,9 @@ function createRecommendationsPage(data) {
     contentTitle.innerHTML = "";
 
     if (data.total_results == 0) {
-        message.textContent = `No recommendations found for ${searchString}`;
+        message.textContent = `No recommendations found for "${searchString}"`;
     } else {
-        message.textContent = `Recommendations based on ${searchString}. Showing results 1-${data.results.length} of ${data.total_results}`;
+        message.textContent = `Recommendations based on "${searchString}". Showing results 1-${data.results.length} of ${data.total_results}`;
     }
     contentTitle.appendChild(message);
 
