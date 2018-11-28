@@ -102,11 +102,11 @@ h5 {
 .modal {
     position: fixed;
     width: 50%;
-    height: 25%;
+    height: 35%;
     z-index: 101;
-    top: calc((100% - 25%)/2);
+    top: calc((100% - 35%)/2);
     left: calc((100% - 50%)/2);
-    border: 3px solid rgb(100,149,237);
+    border: 3px solid rgb(100, 149, 237);
     text-align: center;
     background-color: white
 }
@@ -153,19 +153,20 @@ input[type=radio]:hover {
 }
 
 .modal-header {
-    padding: 4%
+    padding: 10px;
 }
 
 .modal-radio {
-    margin-top: 7%;
+    line-height: 3;
 }
 
 label {
     padding: 2%;
 }
 
-label:nth-child(2) {
-    margin-right: 20px
+#firstLabel {
+    margin-right: 5%;
+    ;
 }
 
 #tv {
@@ -185,18 +186,19 @@ label:nth-child(2) {
     width: 100%;
     height: auto;
     margin: 1% 3%;
-    background-color: rgb(100,149,237);
+    background-color: rgb(100, 149, 237);
     color: white;
     cursor: pointer;
     transition: transform 0.2s linear;
     text-align: center;
-    box-shadow: 5px 6px 10px rgb(100,100,100);
+    box-shadow: 5px 6px 10px rgb(100, 100, 100);
     border: 1px solid black;
 }
 
 .movieCard:hover {
     transform: scale(1.05);
 }
+
 .imageSection {
     float: left;
     width: 12rem;
@@ -272,13 +274,31 @@ footer {
     }
 
     .modal-radio {
-        display: grid;
-        grid-te
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10%;
+    }
+
+    #movie {
+        width: 15%;
+        margin: 10% 0% 0% 20%;
+    }
+
+    #firstLabel {
+        margin: 0;
+        width: 65%;
     }
 
     #tv {
         margin: 0;
+        width: 15%;
+        margin: 10% 0% 0% 20%;
     }
+
+    #secondLabel {
+        width: 65%;
+    }
+
 
     .cancelButton,
     .saveButton {
@@ -287,12 +307,15 @@ footer {
         text-align: center;
 
     }
+
     .modal {
-    width: 50%;
-    height: 40%;
-    top: calc((100% - 40%)/2);
-    left: calc((100% - 50%)/2);
-    border: 3px solid rgb(100,149,237);
+        width: 50%;
+        height: 40%;
+        top: calc((100% - 40%)/2);
+        left: calc((100% - 50%)/2);
+        border: 3px solid rgb(100, 149, 237);
+    }
+
 }
 
 @media (min-width: 940px) {
@@ -305,5 +328,15 @@ footer {
 @media (min-width: 1200px) {
     .movieCard {
         width: 43%;
+    }
+}
+
+@media(max-height: 500px) {
+    .modal {
+        height: 60%;
+        top: calc((100% - 60%)/2);
+    }
+    .modal-radio{
+        margin-top: 0;
     }
 }
