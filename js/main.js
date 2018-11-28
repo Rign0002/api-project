@@ -11,40 +11,39 @@ const movieDataBaseURL = "https://api.themoviedb.org/3/"
 let imageURL = null;
 let imageSizes = [];
 let searchString = "";
+let videoMode = "";
 
 document.addEventListener("DOMContentLoaded", init);
 
 function init() {
     addEventListeners();
     getDataFromLocalStorage();
-    let searchBar = document.querySelector("#search-input");
-    searchBar.focus();
 
+    videoMode = "movie";
 
+    document.querySelector("#search-input").focus();
 
+    document.querySelector(".backButtonDiv").classList.add("hide");
 }
 
 function addEventListeners() {
     let searchButton = document.querySelector(".searchButtonDiv");
     searchButton.addEventListener("click", startSearch);
+    document.querySelector("#search-input").addEventListener("keydown", ev => {
+        if (ev.keyCode == '13') {
+            if (document.querySelector("#initial-page").classList.value != "page") {
+                document.querySelector(".backButtonDiv").classList.add("hide");
+            } else {
+                document.querySelector(".backButtonDiv").classList.remove("hide");
+            }
+            startSearch();
+        }
+    })
+    document.querySelector(".backButtonDiv").addEventListener("click", goBack)
     document.querySelector(".preferencesDiv").addEventListener("click", showOverlay);
     document.querySelector(".cancelButton").addEventListener("click", hideOverlay);
     document.querySelector(".overlay").addEventListener("click", hideOverlay);
-    document.querySelector(".saveButton").addEventListener("click", ev => {
-        //        let videoList = document.getElementsByName("video");
-        //        let videoType = null;
-        //        for (let i = 0; i < videoList.length; i++) {
-        //            if (videoList[i].checked) {
-        //                videoType = videoList[i].value;
-        //                break;
-        //            }
-        //        }
-        //        if (document.querySelector(".modal-radio").value = tv) {
-        //            document.querySelector("#initialH1").textContent = "TV Series Recommendations";
-        //        } else if (document.querySelector(".modal-radio").value = movie) {
-        //            document.querySelector("#initialH1").textContent = "Movie Recommendations";
-        //        }
-    });
+    document.querySelector(".saveButton").addEventListener("click", saveClick);
 }
 
 function getDataFromLocalStorage() {
@@ -66,8 +65,6 @@ function getPosterURLAndSizes() {
         .then(data => {
             imageURL = data.images.secure_base_url;
             imageSizes = data.images.poster_sizes;
-            console.log(imageURL);
-            console.log(imageSizes);
         })
         .catch(error => {
             console.log(error);
@@ -85,19 +82,27 @@ function startSearch() {
 
         getSearchResults();
     }
+    if (document.querySelector("#initial-page").classList.value != "page") {
+        document.querySelector(".backButtonDiv").classList.add("hide");
+    } else {
+        document.querySelector(".backButtonDiv").classList.remove("hide");
+    }
 }
 
 function getSearchResults() {
 
-    let url = `${movieDataBaseURL}search/movie?api_key=${APIKEY}&query=${searchString}`;
+    let url = `${movieDataBaseURL}search/${videoMode}?api_key=${APIKEY}&query=${searchString}`;
 
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+        console.log(data);
             createPage(data);
         })
         .catch(error => alert(error));
+
+    document.querySelector("#search-results").classList.remove("page");
+    document.querySelector("#initial-page").classList.add("page");
 }
 
 function showOverlay(ev) {
@@ -105,6 +110,11 @@ function showOverlay(ev) {
     let overlay = document.querySelector(".overlay");
     overlay.classList.remove("hide");
     overlay.classList.add("show");
+    if (document.querySelector("#initial-page").classList.value != "page") {
+        document.querySelector(".backButtonDiv").classList.add("hide");
+    } else {
+        document.querySelector(".backButtonDiv").classList.remove("hide");
+    }
     showModalWindow(ev);
 }
 
@@ -131,11 +141,55 @@ function hideModalWindow(ev) {
     modal.classList.add("off");
 }
 
+function saveClick(ev) {
+
+    let videoList = document.getElementsByName("video");
+    let videoType = null;
+    let title = document.querySelector("#modeRecommendations");
+    for (let i = 0; i < videoList.length; i++) {
+        if (videoList[i].checked) {
+            videoType = videoList[i].value;
+            break;
+        }
+    }
+    if (videoType == "tv") {
+        title.textContent = "TV Series Recommendations";
+        videoMode = "tv";
+    } else if (videoType == "movie") {
+        title.textContent = "Movie Recommendations";
+        videoMode = "movie";
+    }
+    document.querySelector("#initial-page>.title").appendChild(title);
+    hideOverlay(ev);
+}
+
+function goBack() {
+    let initialPage = document.querySelector("#initial-page");
+    let searchResults = document.querySelector("#search-results");
+    let recommendResults = document.querySelector("#recommend-results");
+    let backButtonDiv = document.querySelector(".backButtonDiv")
+
+    if (searchResults.className != "page") {
+        searchResults.classList.add("page");
+        initialPage.classList.remove("page");
+    } else if (recommendResults.className != "page") {
+        recommendResults.classList.add("page");
+        searchResults.classList.remove("page");
+    }
+    if (document.querySelector("#initial-page").classList.value != "page") {
+        console.log("worked");
+        document.querySelector(".backButtonDiv").classList.add("hide");
+    } else {
+        document.querySelector(".backButtonDiv").classList.remove("hide");
+    }
+}
+
 function createPage(data) {
     let content = document.querySelector("#search-results>.content");
     let contentTitle = document.querySelector("#search-results>.title");
 
-    let message = document.createElement("h2");
+    let message = document.createElement("h3");
+    let message2 = document.createElement("h5");
     content.innerHTML = "";
     contentTitle.innerHTML = "";
 
@@ -143,11 +197,11 @@ function createPage(data) {
         message.textContent = `No results found for ${searchString}`;
     } else {
         message.textContent = `Showing results 1-${data.results.length} of ${data.total_results} for ${searchString}`;
+        message2.textContent = `Click a movie to get recommendations based on that movie`;
 
     }
-    document.querySelector("#search-results").classList.remove("page");
-    document.querySelector("#initial-page").classList.add("page");
     contentTitle.appendChild(message);
+    contentTitle.appendChild(message2);
 
     let documentFragment = new DocumentFragment();
 
@@ -155,8 +209,8 @@ function createPage(data) {
 
     content.appendChild(documentFragment);
 
-    let cardList = document.querySelectorAll(".content>div");
-    cardList.forEach(card => {
+    let searchResultsCardList = document.querySelectorAll("#search-results>.content>div");
+    searchResultsCardList.forEach(card => {
         card.addEventListener("click", getRecommendations);
     })
 }
@@ -168,19 +222,26 @@ function createMovieCards(results) {
         let movieCard = document.createElement("div");
         let section = document.createElement("section");
         let image = document.createElement("img");
-        let videoTitle = document.createElement("h4");
+        let videoTitle = document.createElement("h3");
         let videoDate = document.createElement("p");
         let videoRating = document.createElement("p");
         let videoOverview = document.createElement("p");
-
-        videoTitle.textContent = movie.title;
-        videoDate.textContent = movie.release_date;
-        videoRating.textContent = movie.vote_average;
-        videoOverview.textContent = movie.overview;
+        if (videoMode == "movie") {
+            videoTitle.textContent = `${movie.title}`;
+            videoDate.textContent = `Release date: ${movie.release_date}`;
+            videoRating.textContent = `Rating: ${movie.vote_average}`;
+            videoOverview.textContent = `Quick summary: ${movie.overview}`;
+            movieCard.setAttribute("data-title", movie.title);
+        } else if (videoMode == "tv") {
+            videoTitle.textContent = `${movie.name}`;
+            videoDate.textContent = `First aired: ${movie.first_air_date}`
+            videoRating.textContent = `Rating: ${movie.vote_average}`;
+            videoOverview.textContent = `Quick summary: ${movie.overview}`;
+            movieCard.setAttribute("data-title", movie.name);
+        }
 
         image.src = `${imageURL}${imageSizes[2]}${movie.poster_path}`;
 
-        movieCard.setAttribute("data-title", movie.title);
         movieCard.setAttribute("data-id", movie.id);
 
         movieCard.className = "movieCard";
@@ -203,15 +264,54 @@ function getRecommendations() {
     let movieTitle = this.getAttribute("data-title");
     searchString = movieTitle;
     let movieID = this.getAttribute("data-id")
-    
-    let url = `${movieDataBaseURL}movie/${movieID}/recommendations?api_key=${APIKEY}`
+
+    document.querySelector("#search-results").classList.add("page");
+    document.querySelector("#recommend-results").classList.remove("page");
+
+    let recommendTitle = document.querySelector("#recommend-results>.title")
+    let recommendContent = document.querySelector("#recommend-results>.content")
+
+    let message = document.createElement("h2");
+    recommendTitle.innerHTML = "";
+    recommendContent.innerHTML = "";
+
+    let documentFragment = new DocumentFragment();
+
+    recommendContent.appendChild(documentFragment);
+
+    let url = `${movieDataBaseURL}${videoMode}/${movieID}/recommendations?api_key=${APIKEY}`
     fetch(url)
-    .then(response => response.json())
-    .then(data => {
-        createPage(data);
-    })
+        .then(response => response.json())
+        .then(data => {
+            createRecommendationsPage(data);
+        })
+        .catch(error => alert(error));
 }
 
+function createRecommendationsPage(data) {
 
+    let content = document.querySelector("#recommend-results>.content");
+    let contentTitle = document.querySelector("#recommend-results>.title");
+    let message = document.createElement("h3");
 
+    content.innerHTML = "";
+    contentTitle.innerHTML = "";
 
+    if (data.total_results == 0) {
+        message.textContent = `No recommendations found for ${searchString}`;
+    } else {
+        message.textContent = `Recommendations based on ${searchString}. Showing results 1-${data.results.length} of ${data.total_results}`;
+    }
+    contentTitle.appendChild(message);
+
+    let documentFragment = new DocumentFragment();
+
+    documentFragment.appendChild(createMovieCards(data.results));
+
+    content.appendChild(documentFragment);
+
+    let recommendResultsCardList = document.querySelectorAll("#recommend-results>.content>div");
+    recommendResultsCardList.forEach(card => {
+        card.addEventListener("click", getRecommendations);
+    })
+}
