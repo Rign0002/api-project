@@ -211,6 +211,10 @@ label {
     height: 17rem;
     margin-right: 1rem;
 }
+section.content{
+    background: rgb(230,230,230);
+    margin: 2%;
+}
 
 /**********************************************************
                     CARDS END
