@@ -47,10 +47,9 @@ let immediatelyInvokedFunctionExpression = (function () {
     }
 
     function getDataFromLocalStorage() {
-//        localStorage.setItem(imageURL);
-//        if(localStorage.getItem(imageURL)){
-//            console.log("got it motherfucker");
-//        }
+
+      
+
         // Check if image secure base url and sizes array are saved in local storage, if not call getPosterURLAndSizes()
 
         // If in local storage, check if saved over 60 minutes ago, if true call getPosterURLAndSizes()
@@ -171,7 +170,6 @@ let immediatelyInvokedFunctionExpression = (function () {
         let initialPage = document.querySelector("#initial-page");
         let searchResults = document.querySelector("#search-results");
         let recommendResults = document.querySelector("#recommend-results");
-        let backButtonDiv = document.querySelector(".backButtonDiv")
 
         if (searchResults.className != "page") {
             searchResults.classList.add("page");
@@ -277,7 +275,6 @@ let immediatelyInvokedFunctionExpression = (function () {
         let recommendTitle = document.querySelector("#recommend-results>.title")
         let recommendContent = document.querySelector("#recommend-results>.content")
 
-        let message = document.createElement("h2");
         recommendTitle.innerHTML = "";
         recommendContent.innerHTML = "";
 
